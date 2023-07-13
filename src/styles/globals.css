@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+background-color: #3f3f46;
+
+color: lightblue;
+
+
+}
