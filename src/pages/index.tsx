@@ -5,7 +5,7 @@ import Link from "next/link";
 import { api } from "~/utils/api";
 
 export default function Home() {
-  const Home: NextPage = () => {
+  
   const user = useUser();
   const { data } = api.posts.getAll.useQuery();
 
@@ -34,5 +34,4 @@ export default function Home() {
       </main>
     </>
   );
-}
 }
