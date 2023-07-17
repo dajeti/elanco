@@ -7,6 +7,8 @@ import { nullable } from "zod";
 import { RouterOutputs, api } from "~/utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Image from "next/image";
+import { LoadingPage, LoadingSpinner } from "~/components/loading";
 
 dayjs.extend(relativeTime);
 
@@ -34,7 +36,11 @@ const PostView = (props: PostWithUser) => {
   return (
 
     <div key={post.id} className="border-b border-slate-400 p-8 flex ">
-      <img src={author.profileImageUrl} className="h-14 w-14 rounded-full" />
+      <img  
+      src={author.profileImageUrl} 
+      alt={`@${author.username}'s profile`}
+      className="h-14 w-14 rounded-full"
+      />
       <div className="felx flex-col">
       <div className="flex gap-1">
        <span>@{author.username}</span>
@@ -53,7 +59,7 @@ export default function Home() {
   const user = useUser();
   const { data, isLoading } = api.posts.getAll.useQuery();
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <LoadingPage/>
 
   if (!data) return <div>Something went wrong</div>
 
