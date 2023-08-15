@@ -1,23 +1,23 @@
-import { SignIn, SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/dist/types/server";
-import { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import { nullable } from "zod";
-import { RouterOutputs, api } from "~/utils/api";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import Image from "next/image";
-import { LoadingPage, LoadingSpinner } from "~/components/loading";
-import { useState } from "react";
-import { text } from "stream/consumers";
+import { SignIn, SignInButton, SignOutButton, useUser } from '@clerk/nextjs';
+import { User } from '@clerk/nextjs/dist/types/server';
+import { NextPage } from 'next';
+import Head from 'next/head';
+import Link from 'next/link';
+import { nullable } from 'zod';
+import { RouterOutputs, api } from '~/utils/api';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import Image from 'next/image';
+import { LoadingPage, LoadingSpinner } from '~/components/loading';
+import { useState } from 'react';
+import { text } from 'stream/consumers';
 
 dayjs.extend(relativeTime);
 
 const CreatePostWizard = () => {
   const { user } = useUser();
 
-  const [input, setinput] = useState("");
+  const [input, setinput] = useState('');
 
   const {mutate} = api.posts.create.useMutation();
 
@@ -32,18 +32,18 @@ const CreatePostWizard = () => {
       className="h-14 w-14 rounded-full"
     />
 
-  <input placeholder="Type some emojis!" 
-  className="grow bg-transparent"
-  type="text" 
-  value={input}
-  onChange={(e) => setinput(e.target.value)}
-  />
-  <button onClick={() => mutate({content: input})}>post</button>
+    <input placeholder="Type some emojis!" 
+      className="grow bg-transparent"
+      type="text" 
+      value={input}
+      onChange={(e) => setinput(e.target.value)}
+    />
+    <button onClick={() => mutate({content: input})}>post</button>
   </div>
   );
 };
 
-type PostWithUser = RouterOutputs["posts"]["getAll"][number];
+type PostWithUser = RouterOutputs['posts']['getAll'][number];
 
 const PostView = (props: PostWithUser) => {
   const { post, author } = props;
@@ -51,31 +51,31 @@ const PostView = (props: PostWithUser) => {
 
     <div key={post.id} className="border-b border-slate-400 p-8 flex ">
       <img  
-      src={author.profileImageUrl} 
-      alt={`@${author.username}'s profile`}
-      className="h-14 w-14 rounded-full"
+        src={author.profileImageUrl} 
+        alt={`@${author.username}'s profile`}
+        className="h-14 w-14 rounded-full"
       />
       <div className="flex flex-col">
-      <div className="flex gap-1">
-       <span>@{author.username}</span>
-       <span>{`- ${dayjs(post.createdAt).fromNow()}`}</span>
-      </div>
-      <span>{post.content}</span>
+        <div className="flex gap-1">
+          <span>@{author.username}</span>
+          <span>{`- ${dayjs(post.createdAt).fromNow()}`}</span>
+        </div>
+        <span>{post.content}</span>
       </div>
     </div>
 
-  )
+  );
 
-}
+};
 
 export default function Home() {
 
   const user = useUser();
   const { data, isLoading } = api.posts.getAll.useQuery();
 
-  if (isLoading) return <LoadingPage/>
+  if (isLoading) return <LoadingPage/>;
 
-  if (!data) return <div>Something went wrong</div>
+  if (!data) return <div>Something went wrong</div>;
 
   return (
     <>
